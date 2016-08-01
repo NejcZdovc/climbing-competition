@@ -1,0 +1,83 @@
+<div class="container" *ngIf="competitors && category">
+    <div class="clearfix">
+        <div class="pull-left">
+            <h4>Državno prvenstvo osnovnih šol - Finale</h4>
+            <h3>{{category.name}} ({{category.yearFrom}} - {{category.yearTo}})</h3>
+            <span *ngIf="partial">
+                <h4><b>Delni rezultati</b></h4>
+            </span>
+            <span *ngIf="!partial">
+                <h4><b>Končni rezultati</b></h4>
+            </span>
+            Skupaj: {{total}} oseb
+        </div>
+        <div class="pull-right hidden-print" style="padding-top: 20px">
+            <a [routerLink]="['CategoryDetail', {id: catId}]" class="btn btn-info">Back to category</a>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="80">Uvrstitev</th>
+                    <th>Priimek in ime</th>
+                    <th>Klub</th>
+                    <template ngFor #route [ngForOf]="routes">
+                        <th>
+                            {{route.name}} - Višina
+                        </th>
+                        <th>
+                            {{route.name}} - Uvrstitev
+                        </th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#competitor of competitors | orderBy: ['ranking']">
+                    <td>
+                        <b>{{competitor.ranking}}.</b>
+                    </td>
+                    <td>
+                        {{competitor.lastname}} {{competitor.firstname}}
+                    </td>
+                    <td>
+                        {{competitor.club}}
+                    </td>
+                    <template ngFor #route [ngForOf]="competitor.routes">
+                        <template [ngIf]="!blank">
+                            <td>
+                                <span >
+                                    {{route.result.height}}
+                                </span>
+                                <span *ngIf="route.result.attempt">
+                                    +
+                                </span>
+                                <span *ngIf="route.result.top">
+                                    (vrh)
+                                </span>
+                            </td>
+                            <td>
+                                {{route.result.ranking}}.
+                            </td>
+                        </template>
+                        <template [ngIf]="blank">
+                            <td></td>
+                            <td></td>
+                        </template>
+                    </template>
+                </tr>
+            </tbody>
+        </table>
+        <div class="clarfix">
+            <div class="pull-left">
+                <h6>Vojnik, 09.04.2016</h6>
+            </div>
+            <div class="pull-right text-right">
+                <br/><br/>
+                <h4>Glavna sodnica</h4>
+                Urška Ciglar
+            </div>
+        </div>
+    </div>
+</div>

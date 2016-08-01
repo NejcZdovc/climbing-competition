@@ -1,0 +1,44 @@
+<div class="container" *ngIf="route">
+    <div class="clearfix">
+        <div class="pull-left">
+            <h3>Edit route</h3>
+        </div>
+        <div class="pull-right" style="padding-top: 20px">
+            <a [routerLink]="['CategoryDetail', {id: catId}]" class="btn btn-info">Back to category</a>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <form class="col-sm-12 col-md-6" (ngSubmit)="onSubmit()" [ngFormModel]="form">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control input-md" placeholder="Name" ngControl="name">
+                <div [hidden]="name.valid  || name.pristine" class="alert alert-danger">
+                    Field "name" is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Referee</label>
+                <input type="text" class="form-control input-md" placeholder="Referee" ngControl="referee">
+                <div [hidden]="referee.valid  || referee.pristine" class="alert alert-danger">
+                    Field "referee" is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Routesetter</label>
+                <input type="text" class="form-control input-md" placeholder="Routesetter" ngControl="routesetter">
+                <div [hidden]="routesetter.valid  || routesetter.pristine" class="alert alert-danger">
+                    Field "routesetter" is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="text" class="form-control input-md" placeholder="Time" ngControl="time">
+                <div [hidden]="time.valid  || time.pristine" class="alert alert-danger">
+                    Field "time" is required
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Save</button>
+        </form>
+    </div>
+</div>

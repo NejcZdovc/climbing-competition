@@ -1,0 +1,59 @@
+<div class="clearfix">
+    <div class="pull-left">
+        <h3>Competitors</h3>
+    </div>
+    <div class="pull-right" style="padding-top: 20px">
+        <a [routerLink]="['CompetitorAdd', {cat_id: catId}]" class="btn btn-default">Add competitor</a>
+        <a (click)="shuffleList()" class="btn btn-primary hidden">Enable auto save</a>
+        <a (click)="saveList()" class="btn btn-success" *ngIf="!autoSave">Save</a>
+        <a [routerLink]="['ResultList', {id: catId, partial: 1}]" class="btn btn-warning">Partial results</a>
+        <a [routerLink]="['ResultList', {id: catId, partial: 0}]" class="btn btn-primary">Results</a>
+        <a (click)="shuffleList()" class="btn btn-danger hidden">Shuffle starting list</a>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="80">Start</th>
+                    <th>Name</th>
+                    <th *ngFor="#route of routes">
+                        {{route.name}}
+                    </th>
+                    <th width="150">Ranking</th>
+                    <th width="150" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#competitor of competitors">
+                    <td>
+                        {{competitor.startNumber}}
+                    </td>
+                    <td>
+                        {{competitor.firstname}} {{competitor.lastname}}
+                    </td>
+                    <td *ngFor="#route of competitor.routes">
+                        <input type="text" [(ngModel)]="route.result.height" (focus)="onFocus($event)" (blur)="onBlur($event, route.id, competitor.id)" style="max-width: 70px; border: 1px solid #ddd; text-align:center;">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="attempt_{{competitor.id}}_{{route.id}}" tabindex="-1" [(ngModel)]="route.result.attempt"> Attempt
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" tabindex="-1" [(ngModel)]="route.result.top"> Top
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        {{competitor.ranking}}
+                    </td>
+                    <td class="text-center">
+                        <a tabindex="-1" [routerLink]="['CompetitorEdit', {id: competitor.id, cat_id: catId}]">Edit</a> | <a href="#" tabindex="-1">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
