@@ -5,6 +5,9 @@
   "repository": {
     "url": "https://github.com/mgechev/angular2-seed"
   },
+  "engines": {
+    "node": "6.x"
+  },
   "scripts": {
     "build.dev": "gulp build.dev --color",
     "build.dev.watch": "gulp build.dev.watch --color",
