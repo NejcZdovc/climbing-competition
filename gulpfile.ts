@@ -90,8 +90,7 @@ gulp.task('docs', (done: any) =>
 // Serve dev
 gulp.task('serve.dev', (done: any) =>
   runSequence('build.dev',
-              'server.start',
-              'watch.dev',
+              'server.start'
               done));
 
 // --------------
