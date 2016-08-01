@@ -9,4 +9,4 @@ export = () => {
   return gulp.src(join(APP_SRC, '**', '*.scss'))
     .pipe(plugins.sass())
     .pipe(gulp.dest(isProd ? TMP_DIR : DEV_DEST));
-}
+};
