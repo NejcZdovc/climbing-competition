@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -18,7 +17,12 @@ import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import {GeneralModule} from './general/general.module';
+import {CategoryModule} from './category/category.module';
+import {CompetitionModule} from './competition/competition.module';
+import {CompetitorModule} from './competitor/competitor.module';
+import {ResultModule} from './result/result.module';
+import {RouteModule} from './route/route.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -28,21 +32,25 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    WebviewDirective
+    WebviewDirective,
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
-    AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    GeneralModule,
+    CategoryModule,
+    CompetitionModule,
+    CompetitorModule,
+    ResultModule,
+    RouteModule,
+    AppRoutingModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

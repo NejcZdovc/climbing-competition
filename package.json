@@ -1,19 +1,10 @@
 {
-  "name": "angular-electron",
-  "version": "3.1.0",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "climbing-competition",
+  "version": "1.0.0",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Nejc Zdovc"
   },
-  "keywords": [
-    "angular",
-    "angular 5",
-    "electron",
-    "typescript",
-    "sass"
-  ],
+  "keywords": [],
   "main": "main.js",
   "private": true,
   "scripts": {
@@ -34,7 +25,15 @@
     "pree2e:protractor": "wait-on http-get://localhost:4200/ && protractor ./protractor.conf.js",
     "e2e": "npm-run-all -p pree2e:build pree2e:protractor"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@angular/animations": "^5.2.9",
+    "@angular/cdk": "^5.2.4",
+    "@angular/material": "^5.2.4",
+    "pouchdb-adapter-idb": "^6.4.3",
+    "pouchdb-adapter-leveldb": "6.4.3",
+    "rxdb": "^7.4.2",
+    "uuid": "^3.2.1"
+  },
   "devDependencies": {
     "@angular/cli": "1.7.1",
     "@angular/common": "5.2.5",
