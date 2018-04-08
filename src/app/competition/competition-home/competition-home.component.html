@@ -9,7 +9,7 @@
       </mat-card-header>
       <mat-card-actions>
         <button mat-button color="primary" (click)="onView(competition.id)">View</button>
-        <button mat-button (click)="onEdit(competition.id)">Edit</button>
+        <button mat-button [routerLink]="['/competition/edit', competition.id]">Edit</button>
         <button mat-button color="warn" (click)="onDelete(competition)">Delete</button>
       </mat-card-actions>
     </mat-card>

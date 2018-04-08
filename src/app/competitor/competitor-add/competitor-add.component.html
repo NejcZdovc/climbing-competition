@@ -1,3 +1,4 @@
-<p>
-  competitor-add works!
-</p>
+<app-wrap>
+  <h1>Add competitor</h1>
+  <app-competitor-form [doc]="tempCompetitor" [category]="currentCategory" (OnUpdate)="submit($event)"></app-competitor-form>
+</app-wrap>

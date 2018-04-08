@@ -19,11 +19,13 @@ export class CompetitionEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnDestroy () {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   ngOnInit() {
-    this.getDocument();
+    this.getCompetition();
   }
 
   async submit(newDoc) {
@@ -35,7 +37,7 @@ export class CompetitionEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async getDocument() {
+  private async getCompetition() {
     const competitionId = this.route.snapshot.paramMap.get('id');
     const db = await this.databaseService.get();
 

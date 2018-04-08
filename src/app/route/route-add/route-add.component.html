@@ -1,3 +1,4 @@
-<p>
-  route-add works!
-</p>
+<app-wrap>
+  <h1>Add route</h1>
+  <app-route-form [doc]="tempRoute" [category]="currentCategory" (OnUpdate)="submit($event)"></app-route-form>
+</app-wrap>

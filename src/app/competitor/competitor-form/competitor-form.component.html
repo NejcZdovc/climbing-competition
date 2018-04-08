@@ -1,0 +1,18 @@
+<form autocomplete="off" *ngIf="doc" class="mat-form">
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.firstName" [autofocus]="true" required name="firstName" placeholder="First name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.lastName" required name="lastName" placeholder="Last name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.club" required name="club" placeholder="Climbing club">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.birthYear" minlength="4" maxlength="4" required name="birthYear" placeholder="Year of birth">
+  </mat-form-field>
+  <div class="button-row">
+    <button mat-raised-button color="primary" (click)=onSave()>Save</button>
+    <button mat-button [routerLink]="['/category/details', category]">Back</button>
+  </div>
+</form>

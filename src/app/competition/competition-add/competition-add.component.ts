@@ -7,23 +7,23 @@ import {DatabaseService} from '../../providers/database.service';
   styleUrls: ['./competition-add.component.scss']
 })
 export class CompetitionAddComponent implements OnInit {
-  tempDoc: any;
+  tempCompetition: any;
 
   constructor(private databaseService: DatabaseService) { }
 
   async ngOnInit() {
-    await this.newDocument();
+    await this.newCompetition();
   }
 
-  async newDocument() {
+  async newCompetition() {
     const db = await this.databaseService.get();
-    this.tempDoc = db.competition.newDocument({});
+    this.tempCompetition = db.competition.newDocument({});
   }
 
   async submit(newDoc) {
     try {
       await newDoc.save();
-      await this.newDocument();
+      await this.newCompetition();
     } catch (err) {
       throw err;
     }

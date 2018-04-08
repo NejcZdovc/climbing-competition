@@ -6,6 +6,8 @@ import { CategoryDetailsComponent } from './category-details/category-details.co
 import {CategoryRoutingModule} from './category-routing.module';
 import {GeneralModule} from '../general/general.module';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { CategoryRoutesComponent } from './category-routes/category-routes.component';
+import { CategoryCompetitorsComponent } from './category-competitors/category-competitors.component';
 
 @NgModule({
   imports: [
@@ -13,6 +15,8 @@ import { CategoryFormComponent } from './category-form/category-form.component';
     CategoryRoutingModule
   ],
   declarations: [
+    CategoryRoutesComponent,
+    CategoryCompetitorsComponent,
     CategoryFormComponent,
     CategoryAddComponent,
     CategoryEditComponent,

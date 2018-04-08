@@ -1,0 +1,55 @@
+{
+  "title": "competitor schema",
+  "version": 0,
+  "disableKeyCompression": true,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "createdAt": {
+      "type": "number"
+    },
+    "categoryId": {
+      "type": "string",
+      "final": true
+    },
+    "firstName": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "lastName": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "club": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "birthYear": {
+      "type": "number",
+      "min": 4,
+      "max": 4
+    },
+    "ranking": {
+      "type": "number",
+      "min": 1,
+      "max": 3
+    },
+    "points": {
+      "type": "number",
+      "min": 1,
+      "max": 3
+    },
+    "startNumber": {
+      "type": "number",
+      "min": 1,
+      "max": 3
+    }
+  },
+  "required": ["firstName", "lastName"]
+}

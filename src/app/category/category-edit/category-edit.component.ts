@@ -19,11 +19,13 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnDestroy () {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   ngOnInit() {
-    this.getDocument();
+    this.getCategory();
   }
 
   async submit(newDoc) {
@@ -35,7 +37,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async getDocument() {
+  private async getCategory() {
     const id = this.route.snapshot.paramMap.get('id');
     const db = await this.databaseService.get();
 

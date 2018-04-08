@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DatabaseService} from '../../providers/database.service';
-import {CompetitionService} from '../../providers/competition.service';
+import {StoreService} from '../../providers/store.service';
 
 @Component({
   selector: 'app-category-add',
@@ -9,29 +9,29 @@ import {CompetitionService} from '../../providers/competition.service';
 })
 export class CategoryAddComponent implements OnInit {
   currentCompetition: string = null;
-  tempDoc: any;
+  tempCategory: any;
 
   constructor(
     private databaseService: DatabaseService,
-    private competitionService: CompetitionService
+    private storeService: StoreService
   ) { }
 
   async ngOnInit() {
-    this.currentCompetition = this.competitionService.getCurrent();
+    this.currentCompetition = this.storeService.getCurrent('competition');
 
-    await this.newDocument();
+    await this.newCategory();
   }
 
-  async newDocument() {
+  async newCategory() {
     const db = await this.databaseService.get();
-    this.tempDoc = db.category.newDocument({});
+    this.tempCategory = db.category.newDocument({});
   }
 
   async submit(newDoc) {
     try {
       newDoc.competitionId = this.currentCompetition;
       await newDoc.save();
-      await this.newDocument();
+      await this.newCategory();
     } catch (err) {
       throw err;
     }

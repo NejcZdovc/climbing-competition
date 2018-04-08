@@ -11,6 +11,14 @@ const collections = [
   {
     name: 'category',
     schema: require('../database/schema/category.schema.json')
+  },
+  {
+    name: 'route',
+    schema: require('../database/schema/route.schema.json')
+  },
+  {
+    name: 'competitor',
+    schema: require('../database/schema/competitor.schema.json')
   }
 ];
 

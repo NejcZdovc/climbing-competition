@@ -25,7 +25,13 @@ h4 {
   flex: 1;
 }
 
-.title {
-  margin: 11px 0 0 auto;
-  font-size: 20px;
+.navigation {
+  margin: 15px 0 0 auto;
+  font-size: 16px;
+
+  a {
+    display: inline-block;
+    color: #333333;
+    text-decoration: none;
+  }
 }

@@ -1,3 +1,6 @@
-<p>
-  category-details works!
-</p>
+<app-wrap>
+  <h1>Category: {{category?.name}}</h1>
+  <app-category-routes [routes]="routes"></app-category-routes>
+  <mat-divider></mat-divider>
+  <app-category-competitors [routes]="routes"></app-category-competitors>
+</app-wrap>

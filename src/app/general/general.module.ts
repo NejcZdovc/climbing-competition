@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HeaderComponent } from './header/header.component';
 import { WrapComponent } from './wrap/wrap.component';
 import {
   MatFormFieldModule,
@@ -7,14 +6,18 @@ import {
   MatButtonModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCardModule, MatIconModule
+  MatCardModule,
+  MatIconModule,
+  MatDividerModule,
+  MatTableModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DatabaseService} from '../providers/database.service';
-import {CompetitionService} from '../providers/competition.service';
+import {StoreService} from '../providers/store.service';
 import {CompetitionGuard} from './competition-guard.service';
+import {CategoryGuard} from './category-guard.service';
 
 @NgModule({
   imports: [
@@ -25,7 +28,6 @@ import {CompetitionGuard} from './competition-guard.service';
   exports: [
     FormsModule,
     CommonModule,
-    HeaderComponent,
     WrapComponent,
     MatInputModule,
     MatFormFieldModule,
@@ -34,12 +36,15 @@ import {CompetitionGuard} from './competition-guard.service';
     MatNativeDateModule,
     MatCardModule,
     MatIconModule,
+    MatDividerModule,
+    MatTableModule
   ],
   providers: [
     DatabaseService,
-    CompetitionService,
-    CompetitionGuard
+    StoreService,
+    CompetitionGuard,
+    CategoryGuard
   ],
-  declarations: [HeaderComponent, WrapComponent]
+  declarations: [WrapComponent]
 })
 export class GeneralModule { }

@@ -10,7 +10,7 @@
       </mat-card-header>
       <mat-card-actions>
         <button mat-button color="primary" (click)="onView(category.id)">View</button>
-        <button mat-button (click)="onEdit(category.id)">Edit</button>
+        <button mat-button [routerLink]="['/category/edit', category.id]">Edit</button>
         <button mat-button color="warn" (click)="onDelete(category)">Delete</button>
       </mat-card-actions>
     </mat-card>

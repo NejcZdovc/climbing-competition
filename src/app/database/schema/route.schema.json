@@ -1,0 +1,35 @@
+{
+  "title": "route schema",
+  "version": 0,
+  "disableKeyCompression": true,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "createdAt": {
+      "type": "number"
+    },
+    "categoryId": {
+      "type": "string",
+      "final": true
+    },
+    "name": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "routeSetter": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "time": {
+      "type": "string",
+      "min": 1,
+      "max": 2
+    }
+  },
+  "required": ["routeSetter", "time"]
+}

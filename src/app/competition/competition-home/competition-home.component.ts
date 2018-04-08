@@ -1,7 +1,7 @@
 import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {DatabaseService} from '../../providers/database.service';
 import {CompetitionDocument} from '../../database/types/competition';
-import {CompetitionService} from '../../providers/competition.service';
+import {StoreService} from '../../providers/store.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -16,25 +16,24 @@ export class CompetitionHomeComponent implements OnInit, OnDestroy {
   constructor(
     private databaseService: DatabaseService,
     private zone: NgZone,
-    private competitionService: CompetitionService,
+    private storeService: StoreService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.show();
+    this.getCompetitions();
+    this.storeService.setCurrent('competition', null);
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   onView(id: string) {
-    this.competitionService.setCurrent(id);
+    this.storeService.setCurrent('competition', id);
     this.router.navigate(['/category/list']);
-  }
-
-  onEdit(id: string) {
-    this.router.navigate(['/competition/edit', id]);
   }
 
   onDelete(competition: CompetitionDocument) {
@@ -44,7 +43,7 @@ export class CompetitionHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async show() {
+  private async getCompetitions() {
     const db = await this.databaseService.get();
     const competitions$ = db.competition
       .find()

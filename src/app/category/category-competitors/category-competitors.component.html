@@ -1,0 +1,78 @@
+<div class="actions">
+  <span routerLink="/competitor/add">
+    <button mat-icon-button>
+      <mat-icon aria-label="Add competitor">add_circle</mat-icon>
+    </button>
+    Add competitor
+  </span>
+  <span>
+    <button mat-icon-button>
+      <mat-icon aria-label="Print start list">assignment</mat-icon>
+    </button>
+    Print start list
+  </span>
+  <span>
+    <button mat-icon-button>
+      <mat-icon aria-label="Print partial results">gradient</mat-icon>
+    </button>
+    Print partial results
+  </span>
+  <span>
+    <button mat-icon-button>
+      <mat-icon aria-label="Print full results">image</mat-icon>
+    </button>
+    Print full results
+  </span>
+</div>
+<mat-divider></mat-divider>
+<mat-table #table [dataSource]="dataSource">
+  <!--Start number-->
+  <ng-container matColumnDef="startNumber">
+    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.startNumber}} </mat-cell>
+  </ng-container>
+
+  <!--Name-->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span class="upper-case">{{element.lastName}}</span> {{element.firstName}} <br>
+      {{element.club}}
+    </mat-cell>
+  </ng-container>
+
+  <!--Route 1-->
+  <ng-container matColumnDef="route_1">
+    <mat-header-cell *matHeaderCellDef> Route 1 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      route 1
+    </mat-cell>
+  </ng-container>
+
+  <!--Route 2-->
+  <ng-container matColumnDef="route_2">
+    <mat-header-cell *matHeaderCellDef> Route 2 </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      route 2
+    </mat-cell>
+  </ng-container>
+
+  <!--Ranking-->
+  <ng-container matColumnDef="ranking">
+    <mat-header-cell *matHeaderCellDef> Ranking </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{element.ranking}}
+    </mat-cell>
+  </ng-container>
+
+  <!--Actions-->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span [routerLink]="['/competitor/edit', element.id]">Edit</span> | Delete
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

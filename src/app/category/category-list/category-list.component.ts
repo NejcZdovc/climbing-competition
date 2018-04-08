@@ -1,5 +1,5 @@
 import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
-import {CompetitionService} from '../../providers/competition.service';
+import {StoreService} from '../../providers/store.service';
 import {CategoryDocument} from '../../database/types/category';
 import {DatabaseService} from '../../providers/database.service';
 import {Router} from '@angular/router';
@@ -15,7 +15,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   sub: any;
 
   constructor(
-    private competitionService: CompetitionService,
+    private storeService: StoreService,
     private databaseService: DatabaseService,
     private router: Router,
     private zone: NgZone
@@ -23,23 +23,22 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.currentCompetition = this.competitionService.getCurrent();
+    this.storeService.setCurrent('category', null);
+    this.currentCompetition = this.storeService.getCurrent('competition');
+    this.getCategories();
 
     console.log(this.currentCompetition); // TODO remove
-
-    this.show();
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   onView(id: string) {
     this.router.navigate(['/category/details', id]);
-  }
-
-  onEdit(id: string) {
-    this.router.navigate(['/category/edit', id]);
+    this.storeService.setCurrent('category', id);
   }
 
   onDelete(category: CategoryDocument) {
@@ -49,7 +48,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async show() {
+  private async getCategories() {
     const db = await this.databaseService.get();
     const competitions$ = db.category
       .find()

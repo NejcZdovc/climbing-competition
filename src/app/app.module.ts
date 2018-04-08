@@ -14,8 +14,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ElectronService } from './providers/electron.service';
 
-import { WebviewDirective } from './directives/webview.directive';
-
 import { AppComponent } from './app.component';
 import {GeneralModule} from './general/general.module';
 import {CategoryModule} from './category/category.module';
@@ -23,6 +21,7 @@ import {CompetitionModule} from './competition/competition.module';
 import {CompetitorModule} from './competitor/competitor.module';
 import {ResultModule} from './result/result.module';
 import {RouteModule} from './route/route.module';
+import {HeaderComponent} from './header/header.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -32,7 +31,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    WebviewDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -3,13 +3,13 @@ import {CanActivate, Router} from '@angular/router';
 import {StoreService} from '../providers/store.service';
 
 @Injectable()
-export class CompetitionGuard implements CanActivate {
+export class CategoryGuard implements CanActivate {
   constructor(private storeService: StoreService, private router: Router) {}
 
   canActivate() {
-    const currentId = this.storeService.getCurrent('competition');
+    const currentId = this.storeService.getCurrent('category');
     if (!currentId) {
-      this.router.navigate(['/competition/welcome']);
+      this.router.navigate(['/category/list']);
       return false;
     }
 
