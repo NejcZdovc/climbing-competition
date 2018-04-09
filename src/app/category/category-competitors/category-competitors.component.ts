@@ -1,22 +1,23 @@
-import {Component, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
+import {Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DatabaseService} from '../../providers/database.service';
 import {CompetitorDocument} from '../../database/types/competitor';
 import {StoreService} from '../../providers/store.service';
 import {RouteDocument} from '../../database/types/route';
 import {MatTableDataSource} from '@angular/material';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'app-category-competitors',
   templateUrl: './category-competitors.component.html',
   styleUrls: ['./category-competitors.component.scss']
 })
-export class CategoryCompetitorsComponent implements OnInit, OnDestroy, OnChanges {
+export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
   displayedColumns: string[]
   sub;
   currentCategory: string;
   dataSource;
-  @Input() routes: RouteDocument[];
+  routes: RouteDocument[];
 
   constructor(
     private route: ActivatedRoute,
@@ -33,51 +34,59 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy, OnChange
 
   ngOnInit() {
     this.currentCategory = this.storeService.getCurrent('category');
+    this.getTableData();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const routes: SimpleChange = changes.routes;
-    if (routes.previousValue !== routes.currentValue) {
-      if (routes) {
-        const numRoutes = this.routes.length;
-
-        this.displayedColumns = ['startNumber', 'name'];
-        for (let i = 0; i < numRoutes; i++) {
-          this.displayedColumns.push(`route_${(i + 1)}`);
-        }
-        this.displayedColumns.push('ranking');
-        this.displayedColumns.push('actions');
-      }
-
-      this.getTableData(routes.currentValue);
-    }
-  }
-
-  private async getTableData (routes: RouteDocument[]) {
+  private async getTableData () {
     const db = await this.databaseService.get();
-    db.competitor
+    const competitors$ = db.competitor
       .find()
       .where('categoryId').eq(this.currentCategory)
-      .exec()
-      .then((competitors: CompetitorDocument[]) => {
-        const data = competitors.map(competitor => {
-          let object = {
-            startNumber: competitor.startNumber,
-            firstName: competitor.firstName,
-            lastName: competitor.lastName,
-            club: competitor.club,
-            ranking: competitor.ranking,
-            id: competitor.id
-          };
+      .$;
 
-          const numRoutes = routes.length;
-          for (let i = 0; i < numRoutes; i++) {
-            object[`route_${(i + 1)}`] = 1;
-          }
+    const routes$ = db.route
+      .find()
+      .where('categoryId').eq(this.currentCategory)
+      .$;
 
-          return object;
-        });
-        this.dataSource = new MatTableDataSource(data);
-      });
+    this.sub = combineLatest(competitors$, routes$).subscribe(data => {
+      const competitors = data[0]
+      const routes = data[1]
+      this.generateTableData(routes, competitors)
+      this.zone.run(() => {});
+    });
+  }
+
+  private generateTableData (routes, competitors) {
+    this.routes = routes.map((route, index) => {
+      const i = index + 1
+      return {
+        columnDef: `route_${i}`,
+        header: `Route ${i}`,
+        route: (test) => {
+          console.log(test);
+        }
+      };
+    });
+
+    const data = competitors.map(competitor => {
+      const object = {
+        startNumber: competitor.startNumber || 1,
+        firstName: competitor.firstName,
+        lastName: competitor.lastName,
+        club: competitor.club,
+        ranking: competitor.ranking || -1,
+        id: competitor.id
+      };
+
+      const numRoutes = routes.length;
+      for (let i = 0; i < numRoutes; i++) {
+        object[`route_${(i + 1)}`] = 1;
+      }
+
+      return object;
+    });
+    console.log(data);
+    this.dataSource = new MatTableDataSource(data);
   }
 }
