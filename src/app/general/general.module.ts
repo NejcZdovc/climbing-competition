@@ -9,7 +9,9 @@ import {
   MatCardModule,
   MatIconModule,
   MatDividerModule,
-  MatTableModule
+  MatTableModule,
+  MatCheckboxModule,
+  MatSortModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -37,7 +39,9 @@ import {CategoryGuard} from './category-guard.service';
     MatCardModule,
     MatIconModule,
     MatDividerModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatSortModule
   ],
   providers: [
     DatabaseService,

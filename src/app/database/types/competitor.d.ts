@@ -6,9 +6,23 @@ declare interface CompetitorType {
   firstName?: string;
   lastName?: string;
   club?: string;
-  ranking?: number;
-  points?: number;
   birthYear?: number;
+  results?: {
+    total: number;
+    ranking: number;
+    route_1: {
+      height: number;
+      attempt: boolean;
+      top: boolean;
+      points: number;
+    };
+    route_2: {
+      height: number;
+      attempt: boolean;
+      top: boolean;
+      points: number;
+    };
+  };
   startNumber?: number;
 }
 

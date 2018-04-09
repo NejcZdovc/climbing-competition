@@ -1,11 +1,12 @@
-import {Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Component, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DatabaseService} from '../../providers/database.service';
-import {CompetitorDocument} from '../../database/types/competitor';
 import {StoreService} from '../../providers/store.service';
 import {RouteDocument} from '../../database/types/route';
-import {MatTableDataSource} from '@angular/material';
+import {MatCheckboxChange, MatSort, MatTableDataSource} from '@angular/material';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import {CompetitorDocument} from '../../database/types/competitor';
+import * as Immutable from 'immutable';
 
 @Component({
   selector: 'app-category-competitors',
@@ -17,7 +18,10 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
   sub;
   currentCategory: string;
   dataSource;
-  routes: RouteDocument[];
+  routes;
+  db;
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,56 +41,222 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
     this.getTableData();
   }
 
-  private async getTableData () {
-    const db = await this.databaseService.get();
-    const competitors$ = db.competitor
+  onAttempt (data: MatCheckboxChange, competitor: CompetitorDocument, route) {
+    try {
+      competitor.results[`route_${route.index}`].attempt = data.checked;
+      competitor.save();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  onTop (data: MatCheckboxChange, competitor: CompetitorDocument, route) {
+    try {
+      competitor.results[`route_${route.index}`].top = data.checked;
+      competitor.save();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  onHeight (data: KeyboardEvent, competitor: CompetitorDocument, route) {
+    try {
+      const height = parseFloat((data.target as HTMLInputElement).value)
+      if (!isNaN(height)) {
+        competitor.results[`route_${route.index}`].height = height;
+        competitor.save();
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  onDelete(competitor: CompetitorDocument) {
+    const result = confirm(`Are you sure that you would like to delete ${competitor.firstName} ${competitor.lastName}?`);
+    if (result === true) {
+      competitor.remove();
+    }
+  }
+
+  onCalculate() {
+    this.db.competitor
       .find()
+      .sort({startNumber: 1})
+      .where('categoryId').eq(this.currentCategory)
+      .exec()
+      .then((competitors: CompetitorDocument[]) => {
+        this.calc(competitors);
+      });
+  }
+
+  private calc (competitors: CompetitorDocument[]) {
+    const competitorsImmutable = Immutable.fromJS(competitors);
+    const routesCount = this.routes.length || 0;
+    const competitorsCount = competitors.length;
+
+    if (competitorsCount === 0) {
+      return;
+    }
+
+    for (let i = 0; i < routesCount; i++) {
+      const routeName = `route_${(i + 1)}`;
+
+      competitors = competitors
+        // Add additional height based on attempt flag
+        .map((competitor: CompetitorDocument) => {
+          if (!competitor.results[routeName].height) {
+            competitor.results[routeName].height = 0;
+          }
+
+          if (competitor.results[routeName].attempt) {
+            // TODO this change should not be saved to the db
+            competitor.results[routeName].height = parseFloat(competitor.results[routeName].height) + 0.000001;
+          }
+
+          competitor.results[routeName].points = 0;
+          competitor.results[routeName].ranking = 0;
+
+          return competitor;
+        })
+
+
+
+      // Sort based on height desc
+      competitors = competitors
+        .sort((first, second) => {
+          return -(first.results[routeName].height - second.results[routeName].height);
+        });
+
+      // Calculating points depending on height
+      for (let j = 0; j < competitorsCount; j++) {
+        let k;
+
+        if ((j + 1) === competitorsCount) {
+          k = j - 1;
+        } else {
+          k = j + 1;
+        }
+
+        const jHeight = competitors[j].results[routeName].height;
+
+        // Check if competitors have same height
+        if (jHeight === competitors[k].results[routeName].height) {
+          let points = k;
+          let l = 1;
+
+          do {
+            k++;
+            if (competitorsCount === k) {
+              break;
+            }
+
+            points = points + k;
+            l++;
+          } while (jHeight === competitors[k].results[routeName].height);
+
+
+          points = points / l;
+
+          for (let m = j; m < k; m++) {
+            competitors[m].results[routeName].rank = j + 1;
+            competitors[m].results[routeName].points = points;
+          }
+
+          j = k - 1;
+        } else {
+          competitors[j].results[routeName].rank = j + 1;
+          competitors[j].results[routeName].points = j + 1;
+        }
+      }
+    }
+
+    // Total results
+    competitors = competitors.map((competitor: CompetitorDocument) => {
+      let total = 0;
+
+      for (let i = 0; i < routesCount; i++) {
+        const routeName = `route_${(i + 1)}`;
+
+        if (i === 0) {
+          total = competitor.results[routeName].points;
+        } else {
+          total *= competitor.results[routeName].points;
+        }
+      }
+
+      competitor.results.total = Math.pow(total, routesCount);
+
+      return competitor;
+    });
+
+
+    // Sort total points asc
+    competitors = competitors
+      .sort((first, second) => {
+        return first.results.total - second.results.total;
+      });
+
+    for (let i = 0; i < competitorsCount; i++) {
+      if (i === 0) {
+        competitors[i].results.ranking = 1;
+      } else {
+        if (competitors[i].results.total === competitors[(i - 1)].results.total) {
+          competitors[i].results.ranking = competitors[(i - 1)].results.ranking;
+        } else {
+          competitors[i].results.ranking = i + 1;
+        }
+      }
+
+      competitors[i].save();
+    }
+  }
+
+  private async getTableData () {
+    this.db = await this.databaseService.get();
+    const competitors$ = this.db.competitor
+      .find()
+      .sort({startNumber: 1})
       .where('categoryId').eq(this.currentCategory)
       .$;
 
-    const routes$ = db.route
+    const routes$ = this.db.route
       .find()
       .where('categoryId').eq(this.currentCategory)
       .$;
 
     this.sub = combineLatest(competitors$, routes$).subscribe(data => {
-      const competitors = data[0]
-      const routes = data[1]
-      this.generateTableData(routes, competitors)
+      const competitors: CompetitorDocument[] = data[0];
+      const routes: RouteDocument[] = data[1];
+      this.generateTableData(routes, competitors);
       this.zone.run(() => {});
     });
   }
 
   private generateTableData (routes, competitors) {
+    this.displayedColumns = ['startNumber', 'name'];
+
     this.routes = routes.map((route, index) => {
-      const i = index + 1
+      const i = index + 1;
+      this.displayedColumns.push(`route_${i}`);
       return {
+        index: i,
         columnDef: `route_${i}`,
-        header: `Route ${i}`,
-        route: (test) => {
-          console.log(test);
-        }
+        header: `Route ${i}`
       };
     });
 
-    const data = competitors.map(competitor => {
-      const object = {
-        startNumber: competitor.startNumber || 1,
-        firstName: competitor.firstName,
-        lastName: competitor.lastName,
-        club: competitor.club,
-        ranking: competitor.ranking || -1,
-        id: competitor.id
-      };
-
-      const numRoutes = routes.length;
-      for (let i = 0; i < numRoutes; i++) {
-        object[`route_${(i + 1)}`] = 1;
+    this.displayedColumns.push('ranking');
+    this.displayedColumns.push('actions');
+    this.dataSource = new MatTableDataSource(competitors);
+    this.dataSource.sortingDataAccessor = (data: CompetitorDocument, property: string) => {
+      switch (property) {
+        case 'startNumber': return +data.startNumber;
+        case 'route_1': return +data.results['route_1'].height;
+        case 'route_2': return +data.results['route_2'].height;
+        case 'ranking': return +data.results.ranking;
+        default: return '';
       }
-
-      return object;
-    });
-    console.log(data);
-    this.dataSource = new MatTableDataSource(data);
+    };
+    this.dataSource.sort = this.sort;
   }
 }

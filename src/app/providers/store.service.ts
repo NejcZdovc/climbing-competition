@@ -13,8 +13,8 @@ export class StoreService {
 
   getCurrent(type: string): string {
     const test = {
-      category: 'e2cbdf04-bbe3-451c-8546-99683a13833f',
-      competition: '777a92e1-9ab7-4030-b919-ba6d7ef72e57'
+      category: '1224021f-971c-4f8e-99f4-bbf3b6912f09',
+      competition: '93f42bce-865d-4063-a92f-c00f0bb0b3b7'
     };
 
     return this.store[type] || test[type] || null; // TODO change this back to dynamic

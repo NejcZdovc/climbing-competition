@@ -58,6 +58,7 @@ export class CategoryDetailsComponent implements OnInit, OnDestroy {
 
     const obs$ = db.route
       .find()
+      .sort({createdAt: 1})
       .where('categoryId').eq(category.id)
       .$;
 
