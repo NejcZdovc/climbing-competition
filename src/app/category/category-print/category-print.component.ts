@@ -78,7 +78,6 @@ export class CategoryPrintComponent implements OnInit, OnDestroy {
       .$;
 
     this.sub = combineLatest(competitors$, routes$, category$, competition$).subscribe(data => {
-      console.log(data);
       const competitors: CompetitorDocument[] = data[0];
       const routes: RouteDocument[] = data[1];
       this.category = data[2];

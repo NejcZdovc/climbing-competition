@@ -97,7 +97,6 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
     if (file) {
       Papa.parse(file[0], {
         complete: function(results) {
-          console.log(results);
           if (!self.competitors || self.competitors.length > 0) {
             alert('Your cateogry is already populated');
             return;

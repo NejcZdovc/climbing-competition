@@ -25,10 +25,6 @@ const collections = [
 import RxDBValidateModule from 'rxdb/plugins/validate';
 RxDB.plugin(RxDBValidateModule);
 
-// TODO remove when not debugging
-RxDB.QueryChangeDetector.enable();
-RxDB.QueryChangeDetector.enableDebugging();
-
 // IndexDB
 // https://github.com/pouchdb/pouchdb/tree/master/packages/node_modules/pouchdb-adapter-idb
 import PouchdbAdapterIdb from 'pouchdb-adapter-idb';

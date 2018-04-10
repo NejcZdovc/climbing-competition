@@ -26,8 +26,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.storeService.setCurrent('category', null);
     this.currentCompetition = this.storeService.getCurrent('competition');
     this.getCategories();
-
-    console.log(this.currentCompetition); // TODO remove
   }
 
   ngOnDestroy() {

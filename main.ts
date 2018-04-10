@@ -13,7 +13,6 @@ try {
 }
 
 function createWindow() {
-
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
@@ -36,8 +35,6 @@ function createWindow() {
       slashes: true
     }));
   }
-
-  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
