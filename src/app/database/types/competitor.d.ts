@@ -22,6 +22,18 @@ declare interface CompetitorType {
       top: boolean;
       points: number;
     };
+    route_3: {
+      height: number;
+      attempt: boolean;
+      top: boolean;
+      points: number;
+    };
+    route_4: {
+      height: number;
+      attempt: boolean;
+      top: boolean;
+      points: number;
+    };
   };
   startNumber?: number;
 }

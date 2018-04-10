@@ -33,12 +33,7 @@ export class CompetitorAddComponent implements OnInit, OnDestroy {
 
   async newCompetitor() {
     const db = await this.databaseService.get();
-    // TODO remove defaults
-    this.tempCompetitor = db.competitor.newDocument({
-      firstName: 'name',
-      club: 'test',
-      birthYear: 2015
-    });
+    this.tempCompetitor = db.competitor.newDocument({});
     const competitors$ = db.competitor
       .find()
       .where('categoryId').eq(this.currentCategory)
@@ -62,6 +57,16 @@ export class CompetitorAddComponent implements OnInit, OnDestroy {
           top: false
         },
         route_2: {
+          height: 0,
+          attempt: false,
+          top: false
+        },
+        route_3: {
+          height: 0,
+          attempt: false,
+          top: false
+        },
+        route_4: {
           height: 0,
           attempt: false,
           top: false

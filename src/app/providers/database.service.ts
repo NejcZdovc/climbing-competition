@@ -29,12 +29,6 @@ RxDB.plugin(RxDBValidateModule);
 RxDB.QueryChangeDetector.enable();
 RxDB.QueryChangeDetector.enableDebugging();
 
-// LevelDB
-// https://github.com/pouchdb/pouchdb/tree/master/packages/node_modules/pouchdb-adapter-leveldb
-// import PouchDbAdapterLevelDb from 'pouchdb-adapter-leveldb';
-// RxDB.plugin(PouchDbAdapterLevelDb);
-// const useAdapter = 'leveldb';
-
 // IndexDB
 // https://github.com/pouchdb/pouchdb/tree/master/packages/node_modules/pouchdb-adapter-idb
 import PouchdbAdapterIdb from 'pouchdb-adapter-idb';
@@ -56,18 +50,14 @@ export class DatabaseService {
   }
 
   private async create(): Promise<Database.DB> {
-    console.log('DatabaseService: creating database..');
-
     const db: Database.DB = await RxDB.create({
       name: 'climbing',
       adapter: useAdapter
     });
 
-    console.log('DatabaseService: created database');
     window['db'] = db; // write to window for debugging
 
     // create collections
-    console.log('DatabaseService: create collections');
     await Promise.all(collections.map(colData => db.collection(colData)));
 
     collections.forEach(colData => {

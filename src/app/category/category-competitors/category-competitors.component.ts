@@ -7,6 +7,7 @@ import {MatCheckboxChange, MatSort, MatTableDataSource} from '@angular/material'
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import {CompetitorDocument} from '../../database/types/competitor';
 import * as Immutable from 'immutable';
+import * as Papa from 'papaparse';
 
 @Component({
   selector: 'app-category-competitors',
@@ -14,12 +15,13 @@ import * as Immutable from 'immutable';
   styleUrls: ['./category-competitors.component.scss']
 })
 export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
-  displayedColumns: string[]
+  displayedColumns: string[];
   sub;
   currentCategory: string;
   dataSource;
   routes;
   db;
+  competitors: CompetitorDocument[];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -87,6 +89,63 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
       .then((competitors: CompetitorDocument[]) => {
         this.calc(competitors);
       });
+  }
+
+  onImport (file: FileList) {
+    const self = this;
+
+    if (file) {
+      Papa.parse(file[0], {
+        complete: function(results) {
+          console.log(results);
+          if (!self.competitors || self.competitors.length > 0) {
+            alert('Your cateogry is already populated');
+            return;
+          }
+
+          if (results && Array.isArray(results.data)) {
+            results.data.forEach((result: string[], index: number) => {
+              if (result.length > 3) {
+                self.db.competitor.newDocument(
+                  {
+                    firstName: result[0],
+                    lastName: result[1],
+                    club: result[3],
+                    birthYear: +result[2],
+                    categoryId: self.currentCategory,
+                    startNumber: index + 1,
+                    results: {
+                      points: 0,
+                      ranking: 0,
+                      route_1: {
+                        height: 0,
+                        attempt: false,
+                        top: false
+                      },
+                      route_2: {
+                        height: 0,
+                        attempt: false,
+                        top: false
+                      },
+                      route_3: {
+                        height: 0,
+                        attempt: false,
+                        top: false
+                      },
+                      route_4: {
+                        height: 0,
+                        attempt: false,
+                        top: false
+                      }
+                    }
+                  }
+                ).save();
+              }
+            });
+          }
+        }
+      });
+    }
   }
 
   private calc (competitors: CompetitorDocument[]) {
@@ -227,6 +286,7 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
     this.sub = combineLatest(competitors$, routes$).subscribe(data => {
       const competitors: CompetitorDocument[] = data[0];
       const routes: RouteDocument[] = data[1];
+      this.competitors = competitors;
       this.generateTableData(routes, competitors);
       this.zone.run(() => {});
     });

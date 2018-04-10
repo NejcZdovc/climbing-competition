@@ -30,6 +30,7 @@
     "@angular/cdk": "^5.2.4",
     "@angular/material": "^5.2.4",
     "immutable": "^3.8.2",
+    "papaparse": "^4.3.7",
     "pouchdb-adapter-idb": "^6.4.3",
     "pouchdb-adapter-leveldb": "6.4.3",
     "rxdb": "^7.4.2",

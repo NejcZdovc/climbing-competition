@@ -6,10 +6,13 @@
     Add competitor
   </span>
   <span>
-    <button mat-icon-button>
-      <mat-icon aria-label="Import competitors">file_upload</mat-icon>
-    </button>
+    <label for="file">
+      <button mat-icon-button>
+        <mat-icon aria-label="Import competitors">file_upload</mat-icon>
+      </button>
     Import competitors
+    <input type="file" id="file" (change)="onImport($event.target.files)" style="display: none">
+    </label>
   </span>
   <span>
     <button mat-icon-button>
@@ -96,7 +99,10 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 <div style="text-align: center; margin-top: 20px">
-  <button mat-icon-button (click)="onCalculate()">
+  <button mat-icon-button routerLink="/category/list" style="width: auto; padding: 0 15px">
+    <mat-icon aria-label="Calculate results">arrow_back</mat-icon> Back to category
+  </button>
+  <button mat-icon-button (click)="onCalculate()" style="width: auto; padding: 0 15px">
     <mat-icon aria-label="Calculate results">keyboard</mat-icon> Calculate results
   </button>
 </div>
