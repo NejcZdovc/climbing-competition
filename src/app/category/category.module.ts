@@ -8,6 +8,7 @@ import {GeneralModule} from '../general/general.module';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { CategoryRoutesComponent } from './category-routes/category-routes.component';
 import { CategoryCompetitorsComponent } from './category-competitors/category-competitors.component';
+import { CategoryPrintComponent } from './category-print/category-print.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { CategoryCompetitorsComponent } from './category-competitors/category-co
     CategoryAddComponent,
     CategoryEditComponent,
     CategoryListComponent,
-    CategoryDetailsComponent
+    CategoryDetailsComponent,
+    CategoryPrintComponent
   ]
 })
 export class CategoryModule { }

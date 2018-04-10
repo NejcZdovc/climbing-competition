@@ -6,6 +6,7 @@ import {CategoryEditComponent} from './category-edit/category-edit.component';
 import {CategoryAddComponent} from './category-add/category-add.component';
 import {CompetitionGuard} from '../general/competition-guard.service';
 import {CategoryDetailsComponent} from './category-details/category-details.component';
+import {CategoryPrintComponent} from './category-print/category-print.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'category/details/:id',
     canActivate: [CompetitionGuard],
     component: CategoryDetailsComponent
+  },
+  {
+    path: 'category/print/:id/:type',
+    canActivate: [CompetitionGuard],
+    component: CategoryPrintComponent
   }
 ];
 

@@ -2,7 +2,7 @@
   <h1>Category list</h1>
   <div class="card-wrap">
     <mat-card *ngFor="let category of categories">
-      <mat-card-header>
+      <mat-card-header (click)="onView(category.id)">
         <mat-card-title>
           <h2 class="mat-h2">{{category.name}}</h2>
         </mat-card-title>

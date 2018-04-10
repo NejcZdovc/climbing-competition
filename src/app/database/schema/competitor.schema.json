@@ -70,6 +70,12 @@
               "type": "number",
               "min": 1,
               "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
             }
           }
         },
@@ -93,6 +99,12 @@
               "type": "number",
               "min": 1,
               "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
             }
           }
         },
@@ -116,6 +128,12 @@
               "type": "number",
               "min": 1,
               "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
             }
           }
         },
@@ -139,6 +157,12 @@
               "type": "number",
               "min": 1,
               "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
             }
           }
         }

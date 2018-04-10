@@ -120,22 +120,26 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
                       route_1: {
                         height: 0,
                         attempt: false,
-                        top: false
+                        top: false,
+                        ranking: 0
                       },
                       route_2: {
                         height: 0,
                         attempt: false,
-                        top: false
+                        top: false,
+                        ranking: 0
                       },
                       route_3: {
                         height: 0,
                         attempt: false,
-                        top: false
+                        top: false,
+                        ranking: 0
                       },
                       route_4: {
                         height: 0,
                         attempt: false,
-                        top: false
+                        top: false,
+                        ranking: 0
                       }
                     }
                   }
@@ -217,13 +221,13 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
           points = points / l;
 
           for (let m = j; m < k; m++) {
-            competitors[m].results[routeName].rank = j + 1;
+            competitors[m].results[routeName].ranking = j + 1;
             competitors[m].results[routeName].points = points;
           }
 
           j = k - 1;
         } else {
-          competitors[j].results[routeName].rank = j + 1;
+          competitors[j].results[routeName].ranking = j + 1;
           competitors[j].results[routeName].points = j + 1;
         }
       }
@@ -313,6 +317,8 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
         case 'startNumber': return +data.startNumber;
         case 'route_1': return +data.results['route_1'].height;
         case 'route_2': return +data.results['route_2'].height;
+        case 'route_3': return +data.results['route_3'].height;
+        case 'route_4': return +data.results['route_4'].height;
         case 'ranking': return +data.results.ranking;
         default: return '';
       }

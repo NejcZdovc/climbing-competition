@@ -15,24 +15,28 @@ declare interface CompetitorType {
       attempt: boolean;
       top: boolean;
       points: number;
+      ranking: number;
     };
     route_2: {
       height: number;
       attempt: boolean;
       top: boolean;
       points: number;
+      ranking: number;
     };
     route_3: {
       height: number;
       attempt: boolean;
       top: boolean;
       points: number;
+      ranking: number;
     };
     route_4: {
       height: number;
       attempt: boolean;
       top: boolean;
       points: number;
+      ranking: number;
     };
   };
   startNumber?: number;

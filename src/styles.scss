@@ -87,8 +87,8 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 }
 
 .mat-card {
-  width: calc((100% / 2) - 30px);
-  margin: 0 15px;
+  width: calc((100% / 3) - 30px);
+  margin: 0 15px 30px;
   min-height: 100px;
   text-align: center;
 }
@@ -114,6 +114,17 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
   &-wrap {
     display: flex;
     margin: 0 -15px;
+    flex-wrap: wrap;
+
+    .mat-card {
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media print {
+  .hidden-print {
+    display: none !important;
   }
 }
 

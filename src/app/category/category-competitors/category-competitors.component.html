@@ -14,19 +14,19 @@
     <input type="file" id="file" (change)="onImport($event.target.files)" style="display: none">
     </label>
   </span>
-  <span>
+  <span [routerLink]="['/category/print/', currentCategory ,'start']">
     <button mat-icon-button>
       <mat-icon aria-label="Print start list">assignment</mat-icon>
     </button>
     Print start list
   </span>
-  <span>
+  <span [routerLink]="['/category/print/', currentCategory ,'partial']">
     <button mat-icon-button>
       <mat-icon aria-label="Print partial results">gradient</mat-icon>
     </button>
     Print partial results
   </span>
-  <span>
+  <span [routerLink]="['/category/print/', currentCategory ,'full']">
     <button mat-icon-button>
       <mat-icon aria-label="Print full results">image</mat-icon>
     </button>
@@ -34,7 +34,7 @@
   </span>
 </div>
 <mat-divider></mat-divider>
-<mat-table matSort [dataSource]="dataSource">
+<mat-table matSort [dataSource]="dataSource" matSortActive="startNumber" matSortDirection="asc">
   <!--Start number-->
   <ng-container matColumnDef="startNumber">
     <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 40px;">No.</mat-header-cell>
@@ -98,7 +98,7 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<div style="text-align: center; margin-top: 20px">
+<div style="text-align: center; margin: 20px 0 50px">
   <button mat-icon-button routerLink="/category/list" style="width: auto; padding: 0 15px">
     <mat-icon aria-label="Calculate results">arrow_back</mat-icon> Back to category
   </button>
