@@ -1,0 +1,15 @@
+<form autocomplete="off" *ngIf="doc" class="mat-form">
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.name" [autofocus]="true" required name="name" placeholder="Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.yearFrom" minlength="4" maxlength="4" required [autofocus]="true" name="yearFrom" placeholder="Year of birth (FROM)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="doc.yearTo" minlength="4" maxlength="4" required [autofocus]="true" name="yearTo" placeholder="Year of birth (TO)">
+  </mat-form-field>
+  <div class="button-row">
+    <button mat-raised-button color="primary" (click)=onSave()>Save</button>
+    <button mat-button routerLink="/category/list">Back</button>
+  </div>
+</form>

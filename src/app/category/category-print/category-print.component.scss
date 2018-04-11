@@ -1,0 +1,55 @@
+:host {
+  font-size: 14px;
+}
+
+.upper-case {
+  text-transform: uppercase;
+}
+
+mat-row:nth-child(odd){
+  background-color: #f8f8f8;
+}
+
+.mat-row {
+  min-height: 37px;
+}
+
+.mat-header-row {
+  min-height: 37px;
+}
+
+.clarfix {
+  clear: both;
+}
+
+.left {
+  float: left;
+}
+
+h4 {
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 24px;
+  margin: 20px 0 10px;
+  font-weight: normal;
+}
+
+.total {
+  margin-bottom: 20px;
+  display: block;
+}
+
+mat-divider {
+  clear: both;
+  margin: 20px 0;
+}
+
+h6 {
+  font-size: 12px;
+  font-weight: normal;
+  margin: 30px 0 0;
+}

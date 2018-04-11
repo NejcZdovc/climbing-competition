@@ -1,0 +1,179 @@
+{
+  "title": "competitor schema",
+  "version": 0,
+  "disableKeyCompression": true,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "createdAt": {
+      "type": "number",
+      "index": true
+    },
+    "categoryId": {
+      "type": "string",
+      "final": true
+    },
+    "firstName": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "lastName": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "club": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "birthYear": {
+      "type": "number",
+      "min": 4,
+      "max": 4
+    },
+    "results": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "min": 1,
+          "max": 3
+        },
+        "ranking": {
+          "type": "number",
+          "min": 1,
+          "max": 3,
+          "default": 0
+        },
+        "route_1": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "attempt": {
+              "type": "boolean",
+              "default": false
+            },
+            "top": {
+              "type": "boolean",
+              "default": false
+            },
+            "points": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
+            }
+          }
+        },
+        "route_2": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "attempt": {
+              "type": "boolean",
+              "default": false
+            },
+            "top": {
+              "type": "boolean",
+              "default": false
+            },
+            "points": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
+            }
+          }
+        },
+        "route_3": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "attempt": {
+              "type": "boolean",
+              "default": false
+            },
+            "top": {
+              "type": "boolean",
+              "default": false
+            },
+            "points": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
+            }
+          }
+        },
+        "route_4": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "attempt": {
+              "type": "boolean",
+              "default": false
+            },
+            "top": {
+              "type": "boolean",
+              "default": false
+            },
+            "points": {
+              "type": "number",
+              "min": 1,
+              "max": 3
+            },
+            "ranking": {
+              "type": "number",
+              "min": 1,
+              "max": 3,
+              "default": 0
+            }
+          }
+        }
+      }
+    },
+    "startNumber": {
+      "type": "number",
+      "min": 1,
+      "max": 3,
+      "index": true
+    }
+  },
+  "required": ["firstName", "lastName"]
+}

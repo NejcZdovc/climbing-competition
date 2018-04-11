@@ -1,0 +1,30 @@
+<app-wrap>
+  <h1>Category list</h1>
+  <div class="card-wrap">
+    <mat-card *ngFor="let category of categories">
+      <mat-card-header (click)="onView(category.id)">
+        <mat-card-title>
+          <h2 class="mat-h2">{{category.name}}</h2>
+        </mat-card-title>
+        <mat-card-subtitle>{{category.yearFrom}} - {{category.yearTo}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="onView(category.id)">View</button>
+        <button mat-button [routerLink]="['/category/edit', category.id]">Edit</button>
+        <button mat-button color="warn" (click)="onDelete(category)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card class="card-add" routerLink="/category/add">
+      <mat-card-header>
+        <mat-card-title>
+          <h2 class="mat-h2">New category</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-icon-button>
+          <mat-icon aria-label="Add category">add_circle</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-wrap>

@@ -1,0 +1,36 @@
+{
+  "title": "category schema",
+  "version": 0,
+  "disableKeyCompression": true,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "createdAt": {
+      "type": "number",
+      "index": true
+    },
+    "competitionId": {
+      "type": "string",
+      "final": true
+    },
+    "name": {
+      "type": "string",
+      "min": 0,
+      "max": 45
+    },
+    "yearFrom": {
+      "type": "string",
+      "min": 4,
+      "max": 4
+    },
+    "yearTo": {
+      "type": "string",
+      "min": 4,
+      "max": 4
+    }
+  },
+  "required": ["name", "yearFrom", "yearTo"]
+}

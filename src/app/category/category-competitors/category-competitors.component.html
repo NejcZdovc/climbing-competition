@@ -1,0 +1,108 @@
+<div class="actions">
+  <span routerLink="/competitor/add">
+    <button mat-icon-button>
+      <mat-icon aria-label="Add competitor">add_circle</mat-icon>
+    </button>
+    Add competitor
+  </span>
+  <span>
+    <label for="file">
+      <button mat-icon-button>
+        <mat-icon aria-label="Import competitors">file_upload</mat-icon>
+      </button>
+    Import competitors
+    <input type="file" id="file" (change)="onImport($event.target.files)" style="display: none">
+    </label>
+  </span>
+  <span [routerLink]="['/category/print/', currentCategory ,'start']">
+    <button mat-icon-button>
+      <mat-icon aria-label="Print start list">assignment</mat-icon>
+    </button>
+    Print start list
+  </span>
+  <span [routerLink]="['/category/print/', currentCategory ,'partial']">
+    <button mat-icon-button>
+      <mat-icon aria-label="Print partial results">gradient</mat-icon>
+    </button>
+    Print partial results
+  </span>
+  <span [routerLink]="['/category/print/', currentCategory ,'full']">
+    <button mat-icon-button>
+      <mat-icon aria-label="Print full results">image</mat-icon>
+    </button>
+    Print full results
+  </span>
+</div>
+<mat-divider></mat-divider>
+<mat-table matSort [dataSource]="dataSource" matSortActive="startNumber" matSortDirection="asc">
+  <!--Start number-->
+  <ng-container matColumnDef="startNumber">
+    <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 40px;">No.</mat-header-cell>
+    <mat-cell *matCellDef="let competitor" style="flex: 0 0 40px;"> {{competitor.startNumber}} </mat-cell>
+  </ng-container>
+
+  <!--Name-->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let competitor" style="font-size: 17px">
+      <span class="upper-case">{{competitor.lastName}}</span> {{competitor.firstName}} <br>
+      {{competitor.club}}
+    </mat-cell>
+  </ng-container>
+
+  <!--Routes-->
+  <ng-container *ngFor="let route of routes" [matColumnDef]="route.columnDef">
+    <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 120px;">{{route.header }}</mat-header-cell>
+    <mat-cell *matCellDef="let competitor" style="flex: 0 0 120px; padding-bottom: 10px">
+      <mat-form-field style="padding: 0 40px 0 0; display: block">
+        <input
+          type="number"
+          matInput
+          [value]="(competitor.results['route_'+ route.index +''].height | number:'1.0-0') || ''"
+          style="padding-left: 5px"
+          (blur)="onHeight($event, competitor, route)"
+        >
+      </mat-form-field>
+      <mat-checkbox
+        [checked]="competitor.results['route_'+ route.index +''].attempt"
+        (change)="onAttempt($event, competitor, route)"
+      >
+        Attempt
+      </mat-checkbox>
+      <mat-checkbox
+        [checked]="competitor.results['route_'+ route.index +''].top"
+        (change)="onTop($event, competitor, route)"
+      >
+        Top
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <!--Ranking-->
+  <ng-container matColumnDef="ranking">
+    <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 70px;">Ranking</mat-header-cell>
+    <mat-cell *matCellDef="let competitor" style="flex: 0 0 70px; text-align: center">
+      {{competitor.results?.ranking}}
+    </mat-cell>
+  </ng-container>
+
+  <!--Actions-->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef style="flex: 0 0 178px;"></mat-header-cell>
+    <mat-cell *matCellDef="let competitor" style="flex: 0 0 178px;">
+      <button mat-button [routerLink]="['/competitor/edit', competitor.id]">Edit</button>
+      <button mat-button color="warn" (click)="onDelete(competitor)">Delete</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<div style="text-align: center; margin: 20px 0 50px">
+  <button mat-icon-button routerLink="/category/list" style="width: auto; padding: 0 15px">
+    <mat-icon aria-label="Calculate results">arrow_back</mat-icon> Back to category
+  </button>
+  <button mat-icon-button (click)="onCalculate()" style="width: auto; padding: 0 15px">
+    <mat-icon aria-label="Calculate results">keyboard</mat-icon> Calculate results
+  </button>
+</div>

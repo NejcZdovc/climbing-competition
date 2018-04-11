@@ -1,13 +1,15 @@
-import {provide, enableProdMode} from 'angular2/core';
-import {bootstrap} from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
-import {AppComponent} from './app/components/app.component';
-import {HTTP_PROVIDERS} from 'angular2/http';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+import { AppModule } from './app/app.module';
+import { AppConfig } from './app/app.config';
 
-bootstrap(AppComponent, [
-  ROUTER_PROVIDERS,
-  provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
-  HTTP_PROVIDERS
-]);
+if (AppConfig.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule, {
+    preserveWhitespaces: false
+  })
+  .catch(err => console.error(err));

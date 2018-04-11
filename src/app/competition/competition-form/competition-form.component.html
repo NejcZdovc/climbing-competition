@@ -1,0 +1,20 @@
+<app-wrap>
+  <form autocomplete="off" *ngIf="doc" class="mat-form">
+    <mat-form-field>
+      <input matInput [(ngModel)]="doc.name" required [autofocus]="true" name="name" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="doc.dateOf" required name="dateOf" placeholder="Date">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="doc.location" required name="location" placeholder="Location">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="doc.referee" required name="referee" placeholder="Referee">
+    </mat-form-field>
+    <div class="button-row">
+      <button mat-raised-button color="primary" (click)=onSave()>Save</button>
+      <button mat-button routerLink="/">Back</button>
+    </div>
+  </form>
+</app-wrap>

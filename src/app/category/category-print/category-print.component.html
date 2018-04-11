@@ -1,0 +1,78 @@
+<app-wrap>
+  <div *ngIf="competition">
+    <div [ngSwitch]="type" style="float:left;">
+      <h4>{{competition?.name}}</h4>
+      <h3>{{category?.name}} ({{category?.yearFrom}} - {{category?.yearTo}})</h3>
+      <span *ngSwitchCase="'partial'">
+        <h4><b>Delni rezultati</b></h4>
+    </span>
+      <span *ngSwitchCase="'final'">
+        <h4><b>Končni rezultati</b></h4>
+    </span>
+      <span *ngSwitchCase="'start'">
+        <h4><b>Štartna lista</b></h4>
+    </span>
+    <span class="total">Skupaj: {{totalNum}} oseb</span>
+    </div>
+    <div class="hidden-print" style="float: right;">
+      <button mat-raised-button [routerLink]="['/category/details', currentCategory]" style="margin-right: 20px">Back</button>
+      <button mat-raised-button color="primary" (click)="onPrint()">Print</button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-table matSort [dataSource]="dataSource" matSortActive="ranking" matSortDirection="asc">
+    <!--Ranking-->
+    <ng-container matColumnDef="ranking">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 40px">No.</mat-header-cell>
+      <mat-cell *matCellDef="let competitor" style="flex: 0 0 40px">
+        {{competitor.results?.ranking}}
+      </mat-cell>
+    </ng-container>
+
+    <!--Name-->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Priimek in ime</mat-header-cell>
+      <mat-cell *matCellDef="let competitor">
+        <span class="upper-case">{{competitor.lastName}}</span> {{competitor.firstName}}
+      </mat-cell>
+    </ng-container>
+
+    <!--Club-->
+    <ng-container matColumnDef="club">
+      <mat-header-cell *matHeaderCellDef>Klub</mat-header-cell>
+      <mat-cell *matCellDef="let competitor">
+        {{competitor.club}}
+      </mat-cell>
+    </ng-container>
+
+    <!--Routes-->
+    <ng-container *ngIf="!isStartList">
+      <ng-container *ngFor="let route of routes" [matColumnDef]="route.columnDef">
+        <mat-header-cell *matHeaderCellDef style="flex: 0 0 80px; text-align: center;">{{route.header }}</mat-header-cell>
+        <mat-cell *matCellDef="let competitor" style="flex: 0 0 80px; text-align: center;">
+          <ng-container *ngIf="route.height; else elseBlock">
+            {{(competitor.results['route_'+ route.index +''].height | number:'1.0-0') || ''}}
+            <span *ngIf="competitor.results['route_'+ route.index +''].top">(vrh)</span>
+            <span *ngIf="competitor.results['route_'+ route.index +''].attempt">+</span>
+          </ng-container>
+          <ng-template #elseBlock>
+            {{competitor.results['route_'+ route.index +''].ranking || ''}}.
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div style="clear: both;" *ngIf="competition">
+    <div style="float:left;">
+      <h6>{{competition.location}}, {{competition.dateOf}}</h6>
+    </div>
+    <div style="text-align: right; float: right;">
+      <br/><br/>
+      <h4>Glavna sodnica</h4>
+      {{competition.referee}}
+    </div>
+  </div>
+</app-wrap>

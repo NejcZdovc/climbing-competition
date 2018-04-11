@@ -1,0 +1,29 @@
+<div class="card-wrap">
+  <mat-card *ngFor="let route of routes; let i = index">
+    <mat-card-header>
+      <mat-card-title>
+        <h2 class="mat-h2">Route {{ i + 1}}</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{route.name}} <br>
+        Setter: {{route.routeSetter}} <br>
+        Allowed time: {{route.time}}min</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-button [routerLink]="['/route/edit', route.id]">Edit</button>
+      <button mat-button color="warn" (click)="onDelete(route)">Delete</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card-add" routerLink="/route/add">
+    <mat-card-header>
+      <mat-card-title>
+        <h2 class="mat-h2">New route</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-icon-button>
+        <mat-icon aria-label="Add route">add_circle</mat-icon>
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>
