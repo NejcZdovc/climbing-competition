@@ -118,7 +118,14 @@ export class CategoryPrintComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(competitors);
     this.dataSource.sortingDataAccessor = (data: CompetitorDocument, property: string) => {
       switch (property) {
-        case 'ranking': return +data.results.ranking;
+        case 'ranking':
+          {
+            if (this.type === 'start') {
+              return +data.startNumber;
+            } else {
+              return +data.results.ranking;
+            }
+          }
         default: return '';
       }
     };

@@ -25,7 +25,12 @@
     <ng-container matColumnDef="ranking">
       <mat-header-cell *matHeaderCellDef mat-sort-header style="flex: 0 0 40px">No.</mat-header-cell>
       <mat-cell *matCellDef="let competitor" style="flex: 0 0 40px">
-        {{competitor.results?.ranking}}
+        <ng-container *ngIf="type == 'start'; else other">
+          {{competitor.startNumber}}
+        </ng-container>
+        <ng-template #other>
+          {{competitor.results?.ranking}}
+        </ng-template>
       </mat-cell>
     </ng-container>
 
