@@ -53,21 +53,25 @@ export class CompetitorAddComponent implements OnInit, OnDestroy {
         ranking: 0,
         route_1: {
           height: 0,
+          temp_height: 0,
           attempt: false,
           top: false
         },
         route_2: {
           height: 0,
+          temp_height: 0,
           attempt: false,
           top: false
         },
         route_3: {
           height: 0,
+          temp_height: 0,
           attempt: false,
           top: false
         },
         route_4: {
           height: 0,
+          temp_height: 0,
           attempt: false,
           top: false
         }

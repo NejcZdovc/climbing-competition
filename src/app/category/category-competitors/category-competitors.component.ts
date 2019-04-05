@@ -118,24 +118,28 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
                       ranking: 0,
                       route_1: {
                         height: 0,
+                        temp_height: 0,
                         attempt: false,
                         top: false,
                         ranking: 0
                       },
                       route_2: {
                         height: 0,
+                        temp_height: 0,
                         attempt: false,
                         top: false,
                         ranking: 0
                       },
                       route_3: {
                         height: 0,
+                        temp_height: 0,
                         attempt: false,
                         top: false,
                         ranking: 0
                       },
                       route_4: {
                         height: 0,
+                        temp_height: 0,
                         attempt: false,
                         top: false,
                         ranking: 0
@@ -170,9 +174,10 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
             competitor.results[routeName].height = 0;
           }
 
+          competitor.results[routeName].temp_height = competitor.results[routeName].height;
+
           if (competitor.results[routeName].attempt) {
-            // TODO this change should not be saved to the db
-            competitor.results[routeName].height = parseFloat(competitor.results[routeName].height) + 0.000001;
+            competitor.results[routeName].temp_height = parseFloat(competitor.results[routeName].temp_height) + 0.000001;
           }
 
           competitor.results[routeName].points = 0;
@@ -186,7 +191,7 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
       // Sort based on height desc
       competitors = competitors
         .sort((first, second) => {
-          return -(first.results[routeName].height - second.results[routeName].height);
+          return -(first.results[routeName].temp_height - second.results[routeName].temp_height);
         });
 
       // Calculating points depending on height
@@ -199,10 +204,10 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
           k = j + 1;
         }
 
-        const jHeight = competitors[j].results[routeName].height;
+        const jHeight = competitors[j].results[routeName].temp_height;
 
         // Check if competitors have same height
-        if (jHeight === competitors[k].results[routeName].height) {
+        if (jHeight === competitors[k].results[routeName].temp_height) {
           let points = k;
           let l = 1;
 
@@ -214,7 +219,7 @@ export class CategoryCompetitorsComponent implements OnInit, OnDestroy {
 
             points = points + k;
             l++;
-          } while (jHeight === competitors[k].results[routeName].height);
+          } while (jHeight === competitors[k].results[routeName].temp_height);
 
 
           points = points / l;

@@ -12,6 +12,7 @@ declare interface CompetitorType {
     ranking: number;
     route_1: {
       height: number;
+      temp_height: number;
       attempt: boolean;
       top: boolean;
       points: number;
@@ -19,6 +20,7 @@ declare interface CompetitorType {
     };
     route_2: {
       height: number;
+      temp_height: number;
       attempt: boolean;
       top: boolean;
       points: number;
@@ -26,6 +28,7 @@ declare interface CompetitorType {
     };
     route_3: {
       height: number;
+      temp_height: number;
       attempt: boolean;
       top: boolean;
       points: number;
@@ -33,6 +36,7 @@ declare interface CompetitorType {
     };
     route_4: {
       height: number;
+      temp_height: number;
       attempt: boolean;
       top: boolean;
       points: number;
